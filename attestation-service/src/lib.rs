@@ -26,7 +26,10 @@ use crate::token::AttestationTokenBroker;
 use anyhow::{anyhow, Context, Result};
 use as_types::SetPolicyInput;
 use config::Config;
+
 pub use kbs_types::{Attestation, Tee};
+use kbs_types::{CombinedAttestation, TeeEvidence, CustomClaims, NestedTEE};
+
 use policy_engine::PolicyEngine;
 use rvps::{Message, RVPSAPI};
 use serde_json::json;
@@ -112,7 +115,7 @@ impl AttestationService {
     /// Evaluate Attestation Evidence.
     /// Issue an attestation results token which contain TCB status and TEE public key.
     pub async fn evaluate(&self, tee: Tee, nonce: &str, attestation: &str) -> Result<String> {
-        let attestation = serde_json::from_str::<Attestation>(attestation)
+        let attestation = serde_json::from_str::<CombinedAttestation>(attestation)
             .context("Failed to deserialize Attestation")?;
         let verifier = crate::verifier::to_verifier(&tee)?;
 

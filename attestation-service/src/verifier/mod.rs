@@ -2,6 +2,7 @@ use anyhow::*;
 use as_types::TeeEvidenceParsedClaim;
 use async_trait::async_trait;
 use kbs_types::{Attestation, Tee};
+use kbs_types::{CombinedAttestation, TeeEvidence, CustomClaims, NestedTEE};
 
 pub mod sample;
 
@@ -94,6 +95,6 @@ pub trait Verifier {
     async fn evaluate(
         &self,
         nonce: String,
-        attestation: &Attestation,
+        attestation: &CombinedAttestation,
     ) -> Result<TeeEvidenceParsedClaim>;
 }

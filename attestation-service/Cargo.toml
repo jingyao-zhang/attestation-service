@@ -4,7 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [features]
-default = [ "rvps-native", "all-verifier" ]
+# default = [ "rvps-native", "all-verifier" ]
+default = [ "rvps-native" ]
 all-verifier = [ "tdx-verifier", "sgx-verifier", "snp-verifier", "az-snp-vtpm-verifier", "csv-verifier", "cca-verifier" ]
 tdx-verifier = [ "eventlog-rs", "scroll", "sgx-dcap-quoteverify-rs" ]
 sgx-verifier = [ "scroll", "sgx-dcap-quoteverify-rs" ]
@@ -30,14 +31,15 @@ cfg-if = "1.0.0"
 chrono = { version = "0.4.19", features = [ "serde" ] }
 codicon = { version = "3.0", optional = true }
 # TODO: change it to "0.1", once released.
-csv-rs = { git = "https://gitee.com/anolis/csv-rs", rev = "05fbacd", optional = true }
+csv-rs = { git = "https://gitee.com/anolis/csv-rs", rev = "d55ac01", optional = true }
 eventlog-rs = { version = "0.1.3", optional = true }
 futures = "0.3.17"
 hex = "0.4.3"
 jsonwebtoken = "8"
 jwt = { version = "0.16.0", features = ["openssl"]}
 # TODO: change it to "0.5", once released.
-kbs-types = { git = "https://github.com/virtee/kbs-types", rev = "c90df0e" }
+# kbs-types = { git = "https://github.com/virtee/kbs-types", rev = "c90df0e" }
+kbs-types = { path = "../../kbs-types/" }
 lazy_static = "1.4.0"
 log.workspace = true
 openssl = { version = "0.10.55", optional = true }
