@@ -27,8 +27,10 @@ impl Verifier for Sample {
         let tee_evidence = serde_json::from_str::<SampleTeeEvidence>(&attestation.tee_evidence.cpu_evidence)
             .context("Deserialize Quote failed.")?;
 
+        debug!("Received device_report: ");
         debug!("{}", attestation.tee_evidence.custom_claims.nested_tee.attestation_report);
 
+        debug!("Start generating reference report data.");
         let mut hasher = Sha384::new();
         hasher.update(&attestation.tee_evidence.custom_claims.nested_tee.attestation_report);
         hasher.update(&nonce);
@@ -48,9 +50,11 @@ impl Verifier for Sample {
         // let reference_report_data =
         //     base64::engine::general_purpose::STANDARD.encode(hasher.finalize());
 
+        debug!("Encoded reference report data: {}", reference_report_data);
         verify_tee_evidence(reference_report_data, &tee_evidence)
             .await
             .context("Evidence's identity verification error.")?;
+        debug!("Verification passed.");
 
         debug!("TEE-Evidence<sample>: {:?}", tee_evidence);
 
